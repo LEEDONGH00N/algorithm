@@ -1,48 +1,42 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
-
-    static ArrayList<BigInteger> answer;
-    public static void getNum(String input){
-        String s_number = "";
-        for(int i=0;i<input.length();i++){
-            char x = input.charAt(i);
-            if(x=='0'||x=='1'||x=='2'||x=='3'||x=='4'||x=='5'||x=='6'||x=='7'||x=='8'||x=='9'){
-                s_number+=x;
-            }
+    static int N; static List<BigInteger> list;
+    static void solution(String line){
+        String tmp = "";
+        for(char x : line.toCharArray()){
+            if(x=='0'||x=='1'||x=='2'||x=='3'||x=='4'||x=='5'||x=='6'||x=='7'||x=='8'||x=='9')
+                tmp += Character.getNumericValue(x);
             else{
-                if(s_number!=""){
-//                    int num = Integer.parseInt(s_number);
-                    answer.add(new BigInteger(s_number));
-                    s_number="";
+                if(!tmp.equals("")) {
+                    list.add(new BigInteger(tmp));
+                    tmp = "";
                 }
             }
         }
-        if(s_number!=""){
-            //int num = Integer.parseInt(s_number);
-            answer.add(new BigInteger(s_number));
+        if(!tmp.equals("")) {
+            list.add(new BigInteger(tmp));
         }
-
     }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
-        answer = new ArrayList<>();
-        int N = Integer.parseInt(br.readLine());
-        for(int i=0;i<N;i++) {
-            String tmp = br.readLine();
-            //숫자 뽑기
-            getNum(tmp);
+        N = Integer.parseInt(br.readLine());
+        list = new ArrayList<>();
+        for(int i = 0; i < N; i++) {
+            String line = br.readLine();
+            solution(line);
         }
-        //오름차순 정렬
-        Collections.sort(answer);
-        //출력
-        for(BigInteger s:answer){
-            System.out.println(s);
-        }
+        Collections.sort(list);
+        for(BigInteger i : list)
+            System.out.println(i);
     }
 }
