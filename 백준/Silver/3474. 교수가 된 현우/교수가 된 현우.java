@@ -8,12 +8,10 @@ public class Main {
         int N = Integer.parseInt(br.readLine());
         for(int i = 0; i < N; i++) {
             int num = Integer.parseInt(br.readLine());
-            int count2 = 0, count5 = 0;
-            for(int j = 2; j <= num; j *= 2)
-                count2 += num / j;
+            int count5 = 0;
             for(int j = 5; j <= num; j *= 5)
                 count5 += num / j;
-            System.out.println(Math.min(count2, count5));
+            System.out.println(count5);
         }
 
     }
