@@ -19,20 +19,16 @@ public class Main {
                     stack.push(t);
                 }
                 else if (t == ']'){
-                    if(stack.isEmpty() || stack.peek() != '['){
+                    if(stack.isEmpty() || stack.pop() != '['){
                         flag = false;
                         break;
                     }
-                    else if (stack.peek() == '[')
-                        stack.pop();
                 }
                 else if (t == ')'){
-                    if(stack.isEmpty() || stack.peek() != '('){
+                    if(stack.isEmpty() || stack.pop() != '('){
                         flag = false;
                         break;
                     }
-                    else if (stack.peek() == '(')
-                        stack.pop();
                 }
             }
             if(!flag || !stack.isEmpty())
