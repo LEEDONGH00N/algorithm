@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
@@ -5,12 +8,10 @@ public class Main {
         Stack<Character> stack = new Stack<>();
         char pre = ' ';
         int answer = 0;
-
         for(char t : iron.toCharArray()){
             if(t == '(')
                 stack.push(t);
-
-            // t == ')'
+                // t == ')'
             else {
                 stack.pop();
                 if(pre == '('){ // 이게 레이저이면 -> 레이저가 쇠막대기를 자름
@@ -25,10 +26,9 @@ public class Main {
         return answer;
     }
 
-
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        String iron = sc.next();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String iron = br.readLine();
         System.out.println(solution(iron));
     }
 }
