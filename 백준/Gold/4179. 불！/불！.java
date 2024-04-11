@@ -9,7 +9,6 @@ class Dot{
 }
 public class Main {
     static int R, C, J_y, J_x , answer = 0;
-    static boolean[][] visited;
     static char[][] map;
     static int[][] jihoon, fire;
     static int[] dy = {-1 ,1, 0, 0}, dx = {0 ,0, 1, -1};
@@ -24,7 +23,6 @@ public class Main {
         fire = new int[R][C];
         for(int i = 0; i < R; i++)
             Arrays.fill(fire[i], Integer.MAX_VALUE);
-        visited = new boolean[R][C];
         for(int i = 0; i < R; i++){
             String line = br.readLine();
             for(int j = 0; j < C; j++){
@@ -43,22 +41,15 @@ public class Main {
 
     static void BFS_fire(int y, int x){
         Queue<Dot> queue = new LinkedList<>();
-        visited[y][x] = true;
         queue.add(new Dot(y, x));
         while(!queue.isEmpty()){
             Dot dot = queue.poll();
             for(int i = 0; i < 4; i++){
                 int ny = dot.y + dy[i];
                 int nx = dot.x + dx[i];
-                if(ny >= R || nx >= C || ny < 0 || nx < 0 || map[ny][nx] == '#' || visited[ny][nx]) continue;
-                if(fire[ny][nx] != Integer.MAX_VALUE) {
-                    if(fire[ny][nx] > fire[dot.y][dot.x] + 1)
-                        fire[ny][nx] = fire[dot.y][dot.x] + 1;
-                }
-                else{
-                    fire[ny][nx] = fire[dot.y][dot.x] + 1;
-                }
-                visited[ny][nx] = true;
+                if(ny >= R || nx >= C || ny < 0 || nx < 0 || map[ny][nx] == '#') continue;
+                if(fire[ny][nx] <= fire[dot.y][dot.x] + 1) continue;
+                fire[ny][nx] = fire[dot.y][dot.x] + 1;
                 queue.add(new Dot(ny, nx));
             }
         }
@@ -66,7 +57,6 @@ public class Main {
 
     static void BFS(int y, int x){
         Queue<Dot> queue = new LinkedList<>();
-        visited[y][x] = true;
         queue.add(new Dot(y, x));
         while(!queue.isEmpty()){
             Dot dot = queue.poll();
@@ -77,9 +67,8 @@ public class Main {
             for(int i = 0; i < 4; i++){
                 int ny = dot.y + dy[i];
                 int nx = dot.x + dx[i];
-                if(ny >= R || nx >= C || ny < 0 || nx < 0 || map[ny][nx] != '.' || visited[ny][nx]) continue;
+                if(ny >= R || nx >= C || ny < 0 || nx < 0 || map[ny][nx] != '.' || jihoon[ny][nx] != 0) continue;
                 if(fire[ny][nx] <= jihoon[dot.y][dot.x] + 1) continue;
-                visited[ny][nx] = true;
                 jihoon[ny][nx] = jihoon[dot.y][dot.x] + 1;
                 queue.add(new Dot(ny, nx));
             }
@@ -88,10 +77,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         input();
         for(Dot fire : fires) {
-            visited = new boolean[R][C];
             BFS_fire(fire.y, fire.x);
         }
-        visited = new boolean[R][C];
         BFS(J_y, J_x);
         if(answer == 0) System.out.println("IMPOSSIBLE");
         else System.out.println(answer);
