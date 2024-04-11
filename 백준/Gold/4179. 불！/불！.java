@@ -40,7 +40,7 @@ public class Main {
     }
 
     static void BFS_fire(int y, int x){
-        Queue<Dot> queue = new LinkedList<>();
+        Queue<Dot> queue = new ArrayDeque<>();
         queue.add(new Dot(y, x));
         while(!queue.isEmpty()){
             Dot dot = queue.poll();
@@ -55,8 +55,8 @@ public class Main {
         }
     }
 
-    static void BFS(int y, int x){
-        Queue<Dot> queue = new LinkedList<>();
+    static void BFS_jihoon(int y, int x){
+        Queue<Dot> queue = new ArrayDeque<>();
         queue.add(new Dot(y, x));
         while(!queue.isEmpty()){
             Dot dot = queue.poll();
@@ -79,7 +79,7 @@ public class Main {
         for(Dot fire : fires) {
             BFS_fire(fire.y, fire.x);
         }
-        BFS(J_y, J_x);
+        BFS_jihoon(J_y, J_x);
         if(answer == 0) System.out.println("IMPOSSIBLE");
         else System.out.println(answer);
     }
