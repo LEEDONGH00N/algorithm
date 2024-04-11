@@ -9,7 +9,6 @@ class Dot{
 }
 public class Main {
     static int R, C, J_y, J_x , answer = 0;
-    static char[][] map;
     static int[][] jihoon, fire;
     static int[] dy = {-1 ,1, 0, 0}, dx = {0 ,0, 1, -1};
     static List<Dot> fires = new ArrayList<>();
@@ -18,7 +17,6 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         R = Integer.parseInt(st.nextToken());
         C = Integer.parseInt(st.nextToken());
-        map = new char[R][C];
         jihoon = new int[R][C];
         fire = new int[R][C];
         for(int i = 0; i < R; i++)
@@ -26,7 +24,6 @@ public class Main {
         for(int i = 0; i < R; i++){
             String line = br.readLine();
             for(int j = 0; j < C; j++){
-                map[i][j] = line.charAt(j);
                 if(line.charAt(j) == 'J'){
                     J_y = i; J_x = j;
                     jihoon[i][j] = 1;
@@ -34,6 +31,9 @@ public class Main {
                 else if(line.charAt(j) == 'F'){
                     fires.add(new Dot(i, j));
                     fire[i][j] = 1;
+                }
+                else if (line.charAt(j) == '#'){
+                    fire[i][j] = -1;
                 }
             }
         }
@@ -47,7 +47,7 @@ public class Main {
             for(int i = 0; i < 4; i++){
                 int ny = dot.y + dy[i];
                 int nx = dot.x + dx[i];
-                if(ny >= R || nx >= C || ny < 0 || nx < 0 || map[ny][nx] == '#') continue;
+                if(ny >= R || nx >= C || ny < 0 || nx < 0 || fire[ny][nx] == -1) continue;
                 if(fire[ny][nx] <= fire[dot.y][dot.x] + 1) continue;
                 fire[ny][nx] = fire[dot.y][dot.x] + 1;
                 queue.add(new Dot(ny, nx));
@@ -67,7 +67,7 @@ public class Main {
             for(int i = 0; i < 4; i++){
                 int ny = dot.y + dy[i];
                 int nx = dot.x + dx[i];
-                if(ny >= R || nx >= C || ny < 0 || nx < 0 || map[ny][nx] != '.' || jihoon[ny][nx] != 0) continue;
+                if(ny >= R || nx >= C || ny < 0 || nx < 0 || fire[ny][nx] == -1 || jihoon[ny][nx] != 0) continue;
                 if(fire[ny][nx] <= jihoon[dot.y][dot.x] + 1) continue;
                 jihoon[ny][nx] = jihoon[dot.y][dot.x] + 1;
                 queue.add(new Dot(ny, nx));
