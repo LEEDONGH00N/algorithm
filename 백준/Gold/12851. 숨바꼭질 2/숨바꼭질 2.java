@@ -9,8 +9,8 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
-        visited = new int[100010];
-        count = new int[100010];
+        visited = new int[100001];
+        count = new int[100001];
     }
     static void solution(){
         Queue<Integer> queue = new ArrayDeque<>();
