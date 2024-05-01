@@ -1,56 +1,71 @@
 import java.io.*;
 import java.util.*;
+class Node{
+    int now;
+    Node pre;
+
+    public Node(int now, Node pre) {
+        this.now = now;
+        this.pre = pre;
+    }
+}
 public class Main {
     static int N, K;
-    static int[] visited, pre;
+    static boolean[] visited;
+    static Deque<Integer> path = new ArrayDeque<>();
     static void input() throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
-        visited = new int[2001000];
-        pre = new int[2001000];
+        visited = new boolean[200100];
+    }
+    static void goBack(){
+        while (N >= K){
+            System.out.print(N-- + " ");
+        }
     }
     static void solution(){
-        Queue<Integer> queue = new ArrayDeque<>();
-        queue.offer(N);
-        visited[N] = 1;
-        pre[N] = 2001000;
+        Node arrive = null;
+        Queue<Node> queue = new ArrayDeque<>();
+        queue.offer(new Node(N, null));
+        visited[N] = true;
         int[] moves = new int[3];
         while (!queue.isEmpty()){
-            int current =  queue.poll();
+            Node current =  queue.poll();
 
-            moves[0] = current + 1;
-            moves[1] = current - 1;
-            moves[2] = current * 2;
-
-            if(current == K)
+            if(current.now == K) {
+                arrive = current;
                 break;
+            }
+
+            moves[0] = current.now + 1;
+            moves[1] = current.now - 1;
+            moves[2] = current.now * 2;
 
             for(int next : moves){
-                if(0 <= next && next <= 200100) {
-                    if (visited[next] == 0) {
-                        queue.offer(next);
-                        visited[next] = visited[current] + 1;
-                        pre[next] = current;
-                    }
-                }
+                if(next < 0 || next >= 200100 || visited[next]) continue;
+                queue.offer(new Node(next, current));
+                visited[next] = true;
             }
         }
+        for (; arrive.pre != null; arrive = arrive.pre) {
+            path.addFirst(arrive.now);
+        }
+        path.addFirst(N);
     }
     public static void main(String[] args) throws IOException {
         input();
-        solution();
-        System.out.println(visited[K] - 1);
-        List<Integer> list = new ArrayList<>();
-        int tmp = K;
-        list.add(K);
-        do {
-            list.add(pre[tmp]);
-            tmp = pre[tmp];
-        } while (tmp != 2001000);
-        for(int i = list.size() - 2; i >= 0; i--){
-            System.out.print(list.get(i) + " ");
+        if(N >= K) {
+            System.out.println(N - K);
+            goBack();
+        }
+        else {
+            solution();
+            System.out.println(path.size() - 1);
+            while (!path.isEmpty()){
+                System.out.print(path.pollFirst() + " ");
+            }
         }
     }
 }
