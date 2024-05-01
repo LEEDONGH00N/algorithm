@@ -21,9 +21,11 @@ public class Main {
         visited = new boolean[200100];
     }
     static void goBack(){
+        StringBuilder sb = new StringBuilder();
         while (N >= K){
-            System.out.print(N-- + " ");
+            sb.append(N--).append(" ");
         }
+        System.out.println(sb);
     }
     static void solution(){
         Node arrive = null;
@@ -61,11 +63,13 @@ public class Main {
             goBack();
         }
         else {
+            StringBuilder sb = new StringBuilder();
             solution();
             System.out.println(path.size() - 1);
             while (!path.isEmpty()){
-                System.out.print(path.pollFirst() + " ");
+                sb.append(path.pollFirst()).append(" ");
             }
+            System.out.println(sb);
         }
     }
 }
