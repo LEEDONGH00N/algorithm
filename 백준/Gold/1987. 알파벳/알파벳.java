@@ -41,7 +41,9 @@ public class Main {
         input();
         visited[map[1][1] - 'A'] = true;
         solution(1, 1, 1);
-
-        System.out.println(path);
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(path);
+        System.out.println(sb);
     }
 }
