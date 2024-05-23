@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int[] result;
+    static Map<Integer, Integer> result = new HashMap<>();
     static int a, b;
 
     static void input() throws IOException {
@@ -11,26 +11,27 @@ public class Main {
         a = Integer.parseInt(st.nextToken());
         b = Integer.parseInt(st.nextToken());
         st = new StringTokenizer(br.readLine());
-        result = new int[100000001];
         for (int i = 0; i < a; i++) {
             int num = Integer.parseInt(st.nextToken());
-            result[num]++;
+            if(result.containsKey(num)){
+                result.remove(num);
+                continue;
+            }
+            result.put(num, result.getOrDefault(num, 0) + 1);
         }
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < b; i++) {
             int num = Integer.parseInt(st.nextToken());
-            result[num]++;
+            if(result.containsKey(num)){
+                result.remove(num);
+                continue;
+            }
+            result.put(num, result.getOrDefault(num, 0) + 1);
         }
+        System.out.println(result.size());
     }
-    static void solution() {
-        int count = 0;
-        for(int t : result){
-            if(t == 1) count++;
-        }
-        System.out.println(count);
-    }
+
     public static void main(String[] args) throws IOException {
         input();
-        solution();
     }
 }
