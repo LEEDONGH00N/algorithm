@@ -2,8 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static Set<Integer> A = new HashSet<>();
-    static Set<Integer> B = new HashSet<>();
+    static int[] result;
     static int a, b;
 
     static void input() throws IOException {
@@ -12,19 +11,23 @@ public class Main {
         a = Integer.parseInt(st.nextToken());
         b = Integer.parseInt(st.nextToken());
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < a; i++) A.add(Integer.parseInt(st.nextToken()));
+        result = new int[100000001];
+        for (int i = 0; i < a; i++) {
+            int num = Integer.parseInt(st.nextToken());
+            result[num]++;
+        }
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < b; i++) B.add(Integer.parseInt(st.nextToken()));
+        for (int i = 0; i < b; i++) {
+            int num = Integer.parseInt(st.nextToken());
+            result[num]++;
+        }
     }
     static void solution() {
-        Set<Integer> tmp = new HashSet<>(A);
-        A.removeAll(B);
-        B.removeAll(tmp);
-
-        Set<Integer> result = new HashSet<>();
-        result.addAll(A);
-        result.addAll(B);
-        System.out.println(result.size());
+        int count = 0;
+        for(int t : result){
+            if(t == 1) count++;
+        }
+        System.out.println(count);
     }
     public static void main(String[] args) throws IOException {
         input();
