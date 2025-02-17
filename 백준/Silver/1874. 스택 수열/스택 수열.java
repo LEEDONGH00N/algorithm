@@ -10,8 +10,7 @@ public class Main {
 
         int count = 0;
         int start = 0;
-        while (true){
-            count++;
+        while (count++ <= n){
             int num = Integer.parseInt(br.readLine());
             if(start < num){
                 for(int i = start + 1; i <= num; i++){
