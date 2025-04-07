@@ -23,7 +23,7 @@ public class Main {
         start = Integer.parseInt(st.nextToken());
         end = Integer.parseInt(st.nextToken());
 
-        queue = new LinkedList<>();
+        queue = new ArrayDeque<>();
         dist = new int[N+1];
         Arrays.fill(dist, -1);
     }
