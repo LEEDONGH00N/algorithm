@@ -15,8 +15,8 @@ class Truck{
 
 public class Main {
 
-    static Queue<Integer> trucks = new LinkedList<>();
-    static Queue<Truck> bridge = new LinkedList<>();
+    static Queue<Integer> trucks = new ArrayDeque<>();
+    static Queue<Truck> bridge = new ArrayDeque<>();
     static int currentTime = 0;
 
     public static void main(String[] args) throws IOException {
