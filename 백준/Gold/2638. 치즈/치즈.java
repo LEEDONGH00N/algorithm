@@ -15,14 +15,15 @@ public class Main {
     static int M;
     static int[] dy = {-1, 1, 0, 0};
     static int[] dx = {0, 0, 1, -1};
+
+    static boolean[][] visited;
     static int[][] cheese;
-    static int[][] visited;
     static int[][] airContactCount;
     static List<Dot> side;
     static void bfs() {
         Queue<Dot> queue = new LinkedList<>();
         queue.offer(new Dot(0, 0));
-        visited[0][0] = 1;
+        visited[0][0] = true;
 
         while (!queue.isEmpty()) {
             Dot dot = queue.poll();
@@ -35,8 +36,8 @@ public class Main {
                     if (airContactCount[ny][nx] == 2) {
                         side.add(new Dot(ny, nx));
                     }
-                } else if (cheese[ny][nx] == 0 && visited[ny][nx] == 0) {
-                    visited[ny][nx] = 1;
+                } else if (cheese[ny][nx] == 0 && !visited[ny][nx]) {
+                    visited[ny][nx] = true;
                     queue.offer(new Dot(ny, nx));
                 }
             }
@@ -61,7 +62,7 @@ public class Main {
         }
 
         while(size > 0){
-            visited = new int[N][M];
+            visited = new boolean[N][M];
             airContactCount = new int[N][M];
             side = new ArrayList<>();
             bfs();
