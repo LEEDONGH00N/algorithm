@@ -5,29 +5,28 @@ public class Main {
 
     static int N, M, H, day = 0;
     static int raw_count = 0;
-    static int[][][] box;
     static Queue<int[]> queue = new ArrayDeque<>();
-
-    static int[] dz = {1, -1, 0, 0, 0, 0};
-    static int[] dy = {0, 0, -1, 1, 0, 0};
-    static int[] dx = {0, 0, 0, 0, -1, 1};
+    static int[][] dir = {
+            {1, 0, 0},
+            {-1, 0, 0},
+            {0, -1, 0},
+            {0, 1, 0},
+            {0, 0, -1},
+            {0, 0, 1}
+    };
+    static int[][][] box;
 
     static void bfs() {
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int s = 0; s < size; s++) {
                 int[] current = queue.poll();
-                int z = current[0];
-                int y = current[1];
-                int x = current[2];
-
-                for (int i = 0; i < 6; i++) {
-                    int nz = z + dz[i];
-                    int ny = y + dy[i];
-                    int nx = x + dx[i];
-
+                int z = current[0], y = current[1], x = current[2];
+                for(int[] dir : dir) {
+                    int nz = z + dir[0];
+                    int ny = y + dir[1];
+                    int nx = x + dir[2];
                     if (nz < 0 || nz >= H || ny < 0 || ny >= M || nx < 0 || nx >= N) continue;
-
                     if (box[nz][ny][nx] == 0) {
                         box[nz][ny][nx] = 1;
                         raw_count--;
