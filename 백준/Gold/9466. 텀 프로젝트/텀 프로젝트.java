@@ -3,38 +3,39 @@ import java.util.*;
 
 public class Main {
 
-    static int T, N;
-    static int[] students;
+    static int T;
+    static int N;
+    static int cnt;
     static boolean[] visited;
     static boolean[] finished;
-    static int cnt;
+    static int[] students;
 
-    static void dfsIter(int start) {
+
+    static void dfs(int start_student) {
         Stack<Integer> stack = new Stack<>();
-        stack.push(start);
+        stack.push(start_student);
 
         while (!stack.isEmpty()) {
-            int curr = stack.peek();
+            int current_student = stack.peek();
+            int next_student = students[current_student];
 
-            if (!visited[curr]) {
-                visited[curr] = true;
+            if (!visited[current_student]) {
+                visited[current_student] = true;
             }
-
-            int next = students[curr];
-
-            if (!visited[next]) {
-                stack.push(next);
-            } else {
-                if (!finished[next]) {
-                    // 사이클 발견
+            if (!visited[next_student]) {
+                stack.push(next_student);
+                continue;
+            }
+            if (!finished[next_student]) {
+                cnt++;
+                for (int i = next_student; i != current_student; i = students[i]) {
                     cnt++;
-                    for (int i = next; i != curr; i = students[i]) {
-                        cnt++;
-                    }
                 }
-                // 더 이상 갈 곳 없음 → pop
-                stack.pop();
-                finished[curr] = true;
+            }
+            while (!stack.isEmpty()) {
+                int node = stack.pop();
+                finished[node] = true;
+                if (node == current_student) break;
             }
         }
     }
@@ -42,29 +43,31 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        T = Integer.parseInt(br.readLine());
+        T = Integer.parseInt(st.nextToken());
         while (T-- > 0) {
-            N = Integer.parseInt(br.readLine());
-            students = new int[N + 1];
+            st = new StringTokenizer(br.readLine());
+            N = Integer.parseInt(st.nextToken());
             visited = new boolean[N + 1];
             finished = new boolean[N + 1];
+            students = new int[N + 1];
+            cnt = 0;
 
-            StringTokenizer st = new StringTokenizer(br.readLine());
+            st = new StringTokenizer(br.readLine());
             for (int i = 1; i <= N; i++) {
                 students[i] = Integer.parseInt(st.nextToken());
             }
 
-            cnt = 0;
-            for (int i = 1; i <= N; i++) {
-                if (!visited[i]) {
-                    dfsIter(i);
+            for (int j = 1; j <= N; j++) {
+                if (!visited[j]) {
+                    dfs(j);
                 }
             }
 
-            bw.write((N - cnt) + "\n");
+            bw.write(N - cnt + "\n");
+            bw.flush();
         }
-        bw.flush();
         bw.close();
     }
 }
