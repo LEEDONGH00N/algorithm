@@ -1,13 +1,25 @@
 import java.io.*;
-import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        long n = Long.parseLong(br.readLine());
+        long S = Long.parseLong(br.readLine());
 
-        long k = (long)((-1 + Math.sqrt(1 + 8 * n)) / 2);
+        long left = 1, right = S;
+        long answer = 0;
 
-        System.out.println(k);
+        while (left <= right) {
+            long mid = (left + right) / 2;
+            long sum = mid * (mid + 1) / 2;
+
+            if (sum <= S) {
+                answer = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        System.out.println(answer);
     }
 }
