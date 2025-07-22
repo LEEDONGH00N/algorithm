@@ -23,8 +23,7 @@ public class Main {
     static int[][] arr;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        input(br);
+        input();
         while(fisher_index++ <= C){
             catch_shark();
             move_shark();
@@ -33,7 +32,8 @@ public class Main {
         System.out.println(result);
     }
 
-    static void input(BufferedReader br) throws IOException {
+    static void input() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         R = Integer.parseInt(st.nextToken());
         C = Integer.parseInt(st.nextToken());
