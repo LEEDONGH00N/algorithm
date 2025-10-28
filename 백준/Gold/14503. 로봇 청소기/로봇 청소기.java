@@ -47,7 +47,6 @@ public class Main {
             }
 
             if (flag) {
-                boolean moved = false;
                 for (int i = 0; i < 4; i++) {
                     dir = (dir + 3) % 4;
                     int ny = current_y + dy[dir];
@@ -56,24 +55,15 @@ public class Main {
                     if (arr[ny][nx] == 0) {
                         current_y = ny;
                         current_x = nx;
-                        moved = true;
                         break;
                     }
-                }
-                if (!moved) {
-                    int ny = current_y + dy[(dir + 2) % 4];
-                    int nx = current_x + dx[(dir + 2) % 4];
-                    if (ny < 0 || ny >= N || nx < 0 || nx >= M || arr[ny][nx] == 1) break;
-                    current_y = ny;
-                    current_x = nx;
                 }
             } else {
                 int ny = current_y + dy[(dir + 2) % 4];
                 int nx = current_x + dx[(dir + 2) % 4];
-                if (ny < 0 || ny >= N || nx < 0 || nx >= M || arr[ny][nx] == 1) break;
+                if (ny < 0 || ny >= N || nx < 0 || nx >= M || arr[ny][nx] == 1) break; // 뒤가 벽이면 종료
                 current_y = ny;
                 current_x = nx;
-                continue;
             }
         }
         System.out.println(count);
