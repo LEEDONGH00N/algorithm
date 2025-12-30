@@ -16,11 +16,13 @@ public class Main {
             if(i == 1) dp[1] = num;
             else dp[i] = num + dp[i - 1];
         }
-        for(int i = 0; i < m; i++) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
             int start = Integer.parseInt(st.nextToken());
             int end = Integer.parseInt(st.nextToken());
-            System.out.println(dp[end] - dp[start -1]);
+            sb.append(dp[end] - dp[start - 1]).append('\n');
         }
+        System.out.print(sb.toString());
     }
 }
