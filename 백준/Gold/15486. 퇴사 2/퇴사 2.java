@@ -7,26 +7,17 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        int[][] schedules = new int[N+2][2];
-        int max = -1;
+        int[] dp = new int[N+2];
         StringTokenizer st;
         for (int i = 1; i <= N; i++) {
             st = new StringTokenizer(br.readLine());
-            schedules[i][0] = Integer.parseInt(st.nextToken());
-            schedules[i][1] = Integer.parseInt(st.nextToken());
-        }
-        int[] dp = new int[N+2];
-        for(int i = 1; i <= N; i++) {
+            int T = Integer.parseInt(st.nextToken());
+            int P = Integer.parseInt(st.nextToken());
             dp[i+1] = Math.max(dp[i+1], dp[i]);
-            if(i + schedules[i][0] > N + 1) continue;
-            if(dp[i + schedules[i][0]] < dp[i] + schedules[i][1]) {
-                dp[i + schedules[i][0]] = dp[i] + schedules[i][1];
+            if(i + T <= N + 1) {
+                dp[i + T] = Math.max(dp[i + T], dp[i] + P);
             }
         }
-        for(int i = 1; i <= N+1; i++){
-            if(max < dp[i]) max = dp[i];
-        }
-
-        System.out.println(max);
+        System.out.println(dp[N+1]);
     }
 }
