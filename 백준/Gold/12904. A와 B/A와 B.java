@@ -8,19 +8,32 @@ public class Main {
         String S = br.readLine();
         String T = br.readLine();
 
-        for(int i = T.length() - 1; i >= S.length(); i--) {
-            if(T.charAt(i) == 'A'){
-                T = T.substring(0, i);
-            }
-            else if (T.charAt(i) == 'B'){
-                T = T.substring(0, i);
-                T = new StringBuilder(T).reverse().toString();
+        boolean reversed = false;
+        int left = 0, right = T.length() - 1;
+
+        while (right - left + 1 > S.length()) {
+            if (!reversed) {
+                if (T.charAt(right) == 'A') {
+                    right--;
+                } else {
+                    right--;
+                    reversed = true;
+                }
+            } else {
+                if (T.charAt(left) == 'A') {
+                    left++;
+                } else {
+                    left++;
+                    reversed = false;
+                }
             }
         }
-        if(T.equals(S)){
-            System.out.println(1);
-            return;
+        
+        StringBuilder result = new StringBuilder(T.substring(left, right + 1));
+        if (reversed){
+            result.reverse();
         }
-        System.out.println(0);
+
+        System.out.println(result.toString().equals(S) ? 1 : 0);
     }
 }
