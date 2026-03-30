@@ -10,6 +10,7 @@ public class Main {
             String p = br.readLine();
             int n = Integer.parseInt(br.readLine());
             String line = br.readLine();
+            Deque<Integer> deque = new ArrayDeque<>();
             if(n == 0){
                 if(p.contains("D")) {
                     sb.append("error\n");
@@ -20,8 +21,9 @@ public class Main {
                 continue;
             }
             String[] nums = line.substring(1, line.length() - 1).split(",");
-            int start_idx = 0;
-            int end_idx = nums.length - 1;
+            for (String num : nums) {
+                deque.add(Integer.parseInt(num));
+            }
             boolean reverse = false;
             boolean isError = false;
             for(char method : p.toCharArray()) {
@@ -29,15 +31,15 @@ public class Main {
                     reverse = !reverse;
                 }
                 else if (method == 'D') {
-                    if(start_idx > end_idx){
+                    if(deque.isEmpty()){
                         isError = true;
                         break;
                     }
                     if(reverse){
-                        end_idx--;
+                        deque.removeLast();
                     }
                     else{
-                        start_idx++;
+                        deque.removeFirst();
                     }
                 }
             }
@@ -45,21 +47,18 @@ public class Main {
                 sb.append("error\n");
             }
             else {
+                Integer[] arr = deque.toArray(new Integer[0]);
                 sb.append("[");
                 if(!reverse){
-                    for (int idx = start_idx; idx <= end_idx; idx++) {
-                        sb.append(nums[idx]);
-                        if(idx != end_idx){
-                            sb.append(",");
-                        }
+                    for(int idx = 0; idx < arr.length; idx++){
+                        sb.append(arr[idx]);
+                        if(idx != arr.length - 1) sb.append(",");
                     }
                 }
                 else{
-                    for (int idx = end_idx; idx >= start_idx; idx--) {
-                        sb.append(nums[idx]);
-                        if(idx != start_idx){
-                            sb.append(",");
-                        }
+                    for(int idx = arr.length - 1; idx >= 0; idx--){
+                        sb.append(arr[idx]);
+                        if(idx != 0) sb.append(",");
                     }
                 }
                 sb.append("]\n");
