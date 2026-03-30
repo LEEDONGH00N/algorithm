@@ -4,6 +4,7 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         int T = Integer.parseInt(br.readLine());
         for (int i = 0; i < T; i++) {
             String p = br.readLine();
@@ -11,10 +12,10 @@ public class Main {
             String line = br.readLine();
             if(n == 0){
                 if(p.contains("D")) {
-                    System.out.println("error");
+                    sb.append("error\n");
                 }
                 else {
-                    System.out.println("[]");
+                    sb.append("[]\n");
                 }
                 continue;
             }
@@ -41,28 +42,29 @@ public class Main {
                 }
             }
             if (isError) {
-                System.out.println("error");
+                sb.append("error\n");
             }
             else {
-                System.out.print("[");
+                sb.append("[");
                 if(!reverse){
                     for (int idx = start_idx; idx <= end_idx; idx++) {
-                        System.out.print(nums[idx]);
+                        sb.append(nums[idx]);
                         if(idx != end_idx){
-                            System.out.print(",");
+                            sb.append(",");
                         }
                     }
                 }
                 else{
                     for (int idx = end_idx; idx >= start_idx; idx--) {
-                        System.out.print(nums[idx]);
+                        sb.append(nums[idx]);
                         if(idx != start_idx){
-                            System.out.print(",");
+                            sb.append(",");
                         }
                     }
                 }
-                System.out.println("]");
+                sb.append("]\n");
             }
         }
+        System.out.print(sb);
     }
 }
