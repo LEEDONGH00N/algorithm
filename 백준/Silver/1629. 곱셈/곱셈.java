@@ -1,27 +1,28 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigInteger;
 import java.util.*;
+import java.io.*;
 
 public class Main {
-    static BigInteger A, B, C;
-
-    static BigInteger solution(BigInteger i) {
-        if (i.equals(BigInteger.ONE)) return A.mod(C);
-        BigInteger tmp = solution(i.divide(BigInteger.valueOf(2)));
-        tmp = (tmp.multiply(tmp)).mod(C);
-        if (i.mod(BigInteger.valueOf(2)).equals(BigInteger.ONE))
-            tmp = (tmp.multiply(A)).mod(C);
-        return tmp;
-    }
-
+    static long C;
+    
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        A = new BigInteger(st.nextToken());
-        B = new BigInteger(st.nextToken());
-        C = new BigInteger(st.nextToken());
-        System.out.println(solution(B));
+        long A = Long.parseLong(st.nextToken());
+        long B = Long.parseLong(st.nextToken());
+        C = Long.parseLong(st.nextToken());
+        
+        System.out.println(pow(A, B));
+    }
+    
+    static long pow(long A, long B) {
+        if (B == 1) return A % C;         // 기저 조건
+        
+        long half = pow(A, B / 2);        // A^(B/2) 구하기
+        long result = (half * half) % C;  // 제곱
+        
+        if (B % 2 == 1) {                  // B가 홀수면 A 한 번 더 곱하기
+            result = (result * A) % C;
+        }
+        return result;
     }
 }
